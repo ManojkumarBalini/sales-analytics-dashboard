@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-// Use environment variable or fallback to localhost for development
+// Use environment variable or fallback to your Render backend URL
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://sales-analytics-dashboard-0x4w.onrender.com/api';
 
 const api = axios.create({
@@ -32,6 +32,9 @@ api.interceptors.response.use(
     if (error.code === 'ECONNREFUSED') {
       console.error('Backend server is not running');
       alert('Backend server is not running. Please try again later.');
+    } else if (error.response?.status === 0) {
+      console.error('Network error or CORS issue');
+      alert('Cannot connect to the server. Please check your connection and try again.');
     }
     return Promise.reject(error);
   }
@@ -50,6 +53,11 @@ export const getReports = () => {
 // Get specific report by ID
 export const getReportById = (id) => {
   return api.get(`/analytics/reports/${id}`);
+};
+
+// Health check
+export const healthCheck = () => {
+  return api.get('/health');
 };
 
 export default api;
