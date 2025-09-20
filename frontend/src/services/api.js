@@ -1,14 +1,14 @@
 import axios from 'axios';
 
-// Use environment variable or fallback to localhost
-const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'http://localhost:5000/api';
+// Use environment variable or fallback to localhost for development
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://sales-analytics-backend.onrender.com/api';
 
 const api = axios.create({
   baseURL: API_BASE_URL,
   headers: {
     'Content-Type': 'application/json',
   },
-  timeout: 10000, // 10 second timeout
+  timeout: 30000, // 30 second timeout for Render's free tier
 });
 
 // Add a request interceptor to handle errors
@@ -31,7 +31,7 @@ api.interceptors.response.use(
   (error) => {
     if (error.code === 'ECONNREFUSED') {
       console.error('Backend server is not running');
-      alert('Backend server is not running. Please make sure the backend is started on port 5000.');
+      alert('Backend server is not running. Please try again later.');
     }
     return Promise.reject(error);
   }
