@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 // Use environment variable or fallback to localhost for development
-const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://sales-analytics-backend.onrender.com/api';
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://sales-analytics-dashboard-0x4w.onrender.com/api';
 
 const api = axios.create({
   baseURL: API_BASE_URL,
