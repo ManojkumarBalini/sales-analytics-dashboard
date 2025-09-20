@@ -18,7 +18,7 @@ const useBackendHealth = () => {
       } catch (error) {
         console.error('Backend health check failed:', error);
         setIsBackendConnected(false);
-        setError('Cannot connect to backend server');
+        setError('Cannot connect to backend server. Please make sure the backend is running.');
       } finally {
         setLoading(false);
       }
