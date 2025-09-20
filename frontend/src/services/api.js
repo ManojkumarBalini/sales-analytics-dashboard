@@ -31,13 +31,10 @@ api.interceptors.response.use(
   (error) => {
     if (error.code === 'ECONNREFUSED') {
       console.error('Backend server is not running');
-      alert('Backend server is not running. Please try again later.');
     } else if (error.response?.status === 0) {
       console.error('Network error or CORS issue');
-      alert('Cannot connect to the server. Please check your connection and try again.');
     } else if (error.response?.status === 404) {
       console.error('Resource not found');
-      // Don't show alert for 404, let the component handle it
     }
     return Promise.reject(error);
   }
