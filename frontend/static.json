@@ -1,0 +1,23 @@
+{
+  "headers": {
+    "/**": {
+      "Content-Security-Policy": "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:;",
+      "X-Frame-Options": "DENY",
+      "X-Content-Type-Options": "nosniff",
+      "Referrer-Policy": "strict-origin-when-cross-origin",
+      "Permissions-Policy": "geolocation=(), microphone=(), camera=()"
+    }
+  },
+  "redirects": [
+    {
+      "source": "/api/:match*",
+      "destination": "https://sales-analytics-backend.onrender.com/api/:match*",
+      "type": 302
+    }
+  ],
+  "httpsOnly": true,
+  "root": "build/",
+  "routes": {
+    "/**": "index.html"
+  }
+}
