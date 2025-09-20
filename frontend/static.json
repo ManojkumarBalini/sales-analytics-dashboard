@@ -11,7 +11,7 @@
   "redirects": [
     {
       "source": "/api/:match*",
-      "destination": "https://sales-analytics-backend.onrender.com/api/:match*",
+      "destination": "https://sales-analytics-dashboard-0x4w.onrender.com/api/:match*",
       "type": 302
     }
   ],
