@@ -15,30 +15,9 @@ connectDB();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// Enhanced CORS configuration
+// Enhanced CORS configuration - allow all origins for now
 const corsOptions = {
-  origin: function (origin, callback) {
-    // Allow requests with no origin (like mobile apps, Postman, etc.)
-    if (!origin) return callback(null, true);
-    
-    // Allow all origins in development
-    if (process.env.NODE_ENV === 'development') {
-      return callback(null, true);
-    }
-    
-    // Allow specific domains in production
-    const allowedOrigins = [
-      'http://localhost:3000',
-      'https://sales-analytics-dashboard-frotend.onrender.com',
-      'https://sales-analytics-dashboard-0x4w.onrender.com'
-    ];
-    
-    if (allowedOrigins.indexOf(origin) !== -1) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
+  origin: '*', // Allow all origins in production
   credentials: true,
   optionsSuccessStatus: 200
 };
