@@ -31,7 +31,7 @@ const Dashboard = () => {
         setDataAvailable(false);
         setError('No sales data available for the selected date range. Please try a different range.');
       } else {
-        setError(err.response?.data?.error || 'Failed to generate report');
+        setError(err.response?.data?.error || 'Failed to generate report. Please try again.');
       }
     } finally {
       setLoading(false);
