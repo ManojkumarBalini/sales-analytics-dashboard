@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: sales-analytics-backend
+    env: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: MONGODB_URI
+        value: mongodb+srv://manojkumar:Manoj%408143@cluster0.0xoc1yz.mongodb.net/sales_analytics?retryWrites=true&w=majority
+      - key: PORT
+        value: 10000
+      - key: FRONTEND_URL
+        value: https://sales-analytics-dashboard.onrender.com
