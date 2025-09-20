@@ -36,5 +36,3 @@ const useBackendHealth = () => {
 };
 
 export default useBackendHealth;
-
-export default useBackendHealth;
