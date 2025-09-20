@@ -5,6 +5,8 @@ const connectDB = async () => {
     // Use your MongoDB URI directly or from environment variable
     const mongoURI = process.env.MONGODB_URI || 'mongodb+srv://manojkumar:Manoj%408143@cluster0.0xoc1yz.mongodb.net/sales_analytics?retryWrites=true&w=majority';
     
+    console.log('Attempting to connect to MongoDB...');
+    
     const conn = await mongoose.connect(mongoURI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
