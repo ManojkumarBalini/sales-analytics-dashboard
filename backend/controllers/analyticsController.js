@@ -17,12 +17,19 @@ exports.generateReport = async (req, res) => {
     if (isNaN(start.getTime()) || isNaN(end.getTime())) {
       return res.status(400).json({ error: 'Invalid date format' });
     }
+    
+    if (start > end) {
+      return res.status(400).json({ error: 'Start date must be before end date' });
+    }
 
     // Aggregation pipeline
     const aggregationPipeline = [
       {
         $match: {
-          orderDate: { $gte: start, $lte: end },
+          orderDate: { 
+            $gte: start, 
+            $lte: new Date(end.getTime() + 24 * 60 * 60 * 1000) // Include the entire end day
+          },
           status: 'completed'
         }
       },
@@ -119,7 +126,7 @@ exports.generateReport = async (req, res) => {
       }
     ];
 
-    const results = await Order.aggregate(aggregationPipeline);
+    const results = await Order.aggregate(aggregationPipeline).allowDiskUse(true);
     
     if (results[0].summary.length === 0) {
       return res.status(404).json({ error: 'No data found for the selected date range' });
@@ -166,7 +173,7 @@ exports.generateReport = async (req, res) => {
     });
   } catch (error) {
     console.error('Error generating analytics report:', error);
-    res.status(500).json({ error: 'Internal server error' });
+    res.status(500).json({ error: 'Failed to generate report. Please try a different date range.' });
   }
 };
 
