@@ -37,7 +37,7 @@ api.interceptors.response.use(
       alert('Cannot connect to the server. Please check your connection and try again.');
     } else if (error.response?.status === 404) {
       console.error('Resource not found');
-      alert('The requested resource was not found. Please try a different date range.');
+      // Don't show alert for 404, let the component handle it
     }
     return Promise.reject(error);
   }
