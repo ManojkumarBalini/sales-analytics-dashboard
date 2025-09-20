@@ -53,7 +53,7 @@ app.use('/api/analytics', analyticsRoutes);
 app.use('/api', healthRoutes);
 
 // Health check endpoint
-app.get('/health', (req, res) => {
+app.get('/api/health', (req, res) => {
   res.status(200).json({
     status: 'OK',
     message: 'Backend server is running',
@@ -67,7 +67,12 @@ app.get('/', (req, res) => {
   res.json({
     message: 'Sales Analytics API',
     version: '1.0.0',
-    environment: process.env.NODE_ENV
+    environment: process.env.NODE_ENV,
+    endpoints: {
+      health: '/api/health',
+      generateReport: '/api/analytics/generate',
+      getReports: '/api/analytics/reports'
+    }
   });
 });
 
