@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 import Dashboard from './pages/Dashboard';
 import ReportsHistory from './pages/ReportsHistory';
 import Navigation from './components/Navigation';
@@ -8,7 +8,7 @@ import useBackendHealth from './hooks/useBackendHealth';
 import './App.css';
 
 function App() {
-  const { isBackendConnected, loading } = useBackendHealth();
+  const { isBackendConnected, loading, error } = useBackendHealth();
 
   if (loading) {
     return (
@@ -34,19 +34,19 @@ function App() {
             transition={{ duration: 0.5 }}
           >
             <h3>Backend Connection Error</h3>
-            <p>Unable to connect to the backend server. Please make sure the backend is running on port 5000.</p>
+            <p>{error || 'Unable to connect to the backend server.'}</p>
+            <p>Please make sure the backend is running at: https://sales-analytics-dashboard-0x4w.onrender.com</p>
+            <p>This might take a few minutes to start if it was inactive.</p>
           </motion.div>
         )}
         
         <Navigation />
         
-        <AnimatePresence mode="wait">
-          <Routes>
-            <Route path="/" element={<Navigate to="/dashboard" replace />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/reports" element={<ReportsHistory />} />
-          </Routes>
-        </AnimatePresence>
+        <Routes>
+          <Route path="/" element={<Navigate to="/dashboard" replace />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/reports" element={<ReportsHistory />} />
+        </Routes>
       </div>
     </Router>
   );
