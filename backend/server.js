@@ -58,7 +58,8 @@ app.get('/api/health', (req, res) => {
     status: 'OK',
     message: 'Backend server is running',
     timestamp: new Date().toISOString(),
-    environment: process.env.NODE_ENV
+    environment: process.env.NODE_ENV,
+    port: PORT
   });
 });
 
@@ -86,4 +87,5 @@ app.use('*', (req, res) => {
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT} in ${process.env.NODE_ENV} mode`);
+  console.log(`Health check available at: http://localhost:${PORT}/api/health`);
 });
