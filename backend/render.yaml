@@ -3,7 +3,7 @@ services:
     name: sales-analytics-backend
     env: node
     plan: free
-    buildCommand: node render-build.js
+    buildCommand: npm install
     startCommand: npm start
     envVars:
       - key: NODE_ENV
