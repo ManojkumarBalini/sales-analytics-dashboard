@@ -30,6 +30,8 @@ const Dashboard = () => {
       if (err.response?.data?.error === 'No data found for the selected date range') {
         setDataAvailable(false);
         setError('No sales data available for the selected date range. Please try a different range.');
+      } else if (err.response?.status === 404) {
+        setError('The requested resource was not found. Please try a different date range.');
       } else {
         setError(err.response?.data?.error || 'Failed to generate report. Please try again.');
       }
