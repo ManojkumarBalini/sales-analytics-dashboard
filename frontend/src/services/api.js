@@ -35,6 +35,9 @@ api.interceptors.response.use(
     } else if (error.response?.status === 0) {
       console.error('Network error or CORS issue');
       alert('Cannot connect to the server. Please check your connection and try again.');
+    } else if (error.response?.status === 404) {
+      console.error('Resource not found');
+      alert('The requested resource was not found. Please try a different date range.');
     }
     return Promise.reject(error);
   }
