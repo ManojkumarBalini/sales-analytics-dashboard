@@ -3,6 +3,8 @@ import axios from 'axios';
 // Use environment variable or fallback to your Render backend URL
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://sales-analytics-dashboard-0x4w.onrender.com/api';
 
+console.log('API Base URL:', API_BASE_URL);
+
 const api = axios.create({
   baseURL: API_BASE_URL,
   headers: {
@@ -29,13 +31,18 @@ api.interceptors.response.use(
     return response;
   },
   (error) => {
+    console.error('API Error:', error);
+    
     if (error.code === 'ECONNREFUSED') {
       console.error('Backend server is not running');
     } else if (error.response?.status === 0) {
       console.error('Network error or CORS issue');
     } else if (error.response?.status === 404) {
       console.error('Resource not found');
+    } else if (error.response?.status >= 500) {
+      console.error('Server error');
     }
+    
     return Promise.reject(error);
   }
 );
