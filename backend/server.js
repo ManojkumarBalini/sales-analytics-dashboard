@@ -15,9 +15,25 @@ connectDB();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// Enhanced CORS configuration - allow all origins for now
+// Enhanced CORS configuration
+const allowedOrigins = [
+  'http://localhost:3000',
+  'https://sales-analytics-dashboard-frotend.onrender.com',
+  'https://sales-analytics-dashboard-0x4w.onrender.com'
+];
+
 const corsOptions = {
-  origin: '*', // Allow all origins in production
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps, Postman, etc.)
+    if (!origin) return callback(null, true);
+    
+    if (allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      console.log('Blocked by CORS:', origin);
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true,
   optionsSuccessStatus: 200
 };
@@ -26,6 +42,12 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
+
+// Log all requests
+app.use((req, res, next) => {
+  console.log(`${new Date().toISOString()} - ${req.method} ${req.path}`);
+  next();
+});
 
 // Routes
 app.use('/api/analytics', analyticsRoutes);
@@ -38,7 +60,8 @@ app.get('/api/health', (req, res) => {
     message: 'Backend server is running',
     timestamp: new Date().toISOString(),
     environment: process.env.NODE_ENV,
-    port: PORT
+    port: PORT,
+    allowedOrigins: allowedOrigins
   });
 });
 
@@ -67,4 +90,5 @@ app.use('*', (req, res) => {
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT} in ${process.env.NODE_ENV} mode`);
   console.log(`Health check available at: http://localhost:${PORT}/api/health`);
+  console.log(`Allowed origins: ${allowedOrigins.join(', ')}`);
 });
